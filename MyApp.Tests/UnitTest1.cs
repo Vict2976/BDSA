@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using Xunit;
 
 namespace MyApp.Tests
@@ -25,7 +26,8 @@ namespace MyApp.Tests
             Assert.Equal(true, testFour);
             Assert.Equal(false, testSeven);
         }
-
+        
+        [Fact]
         public void divisble_by_hundred(){
 
             //Arrange
@@ -38,7 +40,8 @@ namespace MyApp.Tests
             //Assert
             Assert.Equal(true, testTwoHundred);
         }
-
+        
+        [Fact]
         public void divisble_by_fourHundred(){
 
             //Arrange
@@ -54,6 +57,7 @@ namespace MyApp.Tests
 
         }
 
+        [Fact]
         public void is_leap_year(){
             
             //Arrange
@@ -70,6 +74,36 @@ namespace MyApp.Tests
             Assert.Equal(true, year2024);
             Assert.Equal(true, year1600);
             Assert.Equal(false, year1700);
+
+        }
+
+        [Fact]
+        public void is_user_input_leap_year(){
+
+            //Arrange
+            var writer = new StringWriter();
+            Console.SetOut(writer);
+
+            //Act
+            leapYearClass.readUserInput(1900);
+            var output = writer.GetStringBuilder().ToString().Trim();;
+
+
+            //Assert
+            Assert.Equal("Nay", output); 
+
+        }
+
+        [Fact]
+        public void user_wrong_input(){
+
+        //Arrange
+        
+        //Act
+        var ex = Assert.Throws<FormatException>(() => leapYearClass.readUserInput(Convert.ToInt32("hej")));
+
+        //Assert
+        Assert.Equal("Input string was not in a correct format.", ex.Message);
 
         }
     }
